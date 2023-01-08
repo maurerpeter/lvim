@@ -6,7 +6,6 @@ filled in as strings with either
 a global executable or a path to
 an executable
 ]]
--- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
 
 -- general
 lvim.log.level = "warn"
@@ -18,13 +17,25 @@ lvim.colorscheme = "vscode"
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 -- add your own keymapping
+--
+-- Normal Mode
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 -- scrolling up/down with centering is done by neoscroll
 -- lvim.keys.normal_mode["<C-d>"] = "<C-d>zz"
 -- lvim.keys.normal_mode["<C-u>"] = "<C-u>zz"
--- lvim.keys.normal_mode["<leader>gd"] = ":DiffviewOpen"
+lvim.keys.normal_mode["n"] = "nzzzv"
+lvim.keys.normal_mode["N"] = "Nzzzv"
+--
+-- Insert Mode
+lvim.keys.insert_mode["<C-s>"] = "<Esc>:w<cr>"
+--
+-- Visual Mode
+-- Paste in place of selection without yanking
+lvim.keys.visual_mode["p"] = '"_dP'
+lvim.keys.visual_mode["J"] = ":move '>+1<CR>gv-gv"
+lvim.keys.visual_mode["K"] = ":move '<-2<CR>gv-gv"
 
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
@@ -137,38 +148,40 @@ lvim.lsp.on_attach_callback = function(client, bufnr)
 end
 
 -- -- set a formatter, this will override the language server formatting capabilities (if it exists)
-local formatters = require "lvim.lsp.null-ls.formatters"
-formatters.setup {
+local formatters = require("lvim.lsp.null-ls.formatters")
+formatters.setup({
   {
     command = "prettierd",
     -- command = "eslint_d",
     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
   },
-}
+})
 
 -- set additional linters
-local linters = require "lvim.lsp.null-ls.linters"
-linters.setup {
+local linters = require("lvim.lsp.null-ls.linters")
+linters.setup({
   {
     command = "eslint_d",
     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
   },
-}
+})
 
 -- set code actions
-local code_actions = require "lvim.lsp.null-ls.code_actions"
-code_actions.setup {
+local code_actions = require("lvim.lsp.null-ls.code_actions")
+code_actions.setup({
   {
     exe = "eslint_d",
-    filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" }
-  }
-}
+    filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+  },
+})
 
 -- Additional Plugins
 lvim.plugins = {
   "lunarvim/colorschemes",
+  -- vscode theme
   "Mofiqul/vscode.nvim",
   {
+    -- smooth scrolling for code jumps
     "karb94/neoscroll.nvim",
     config = function()
       -- Hack source for centering after scroll with neoscroll: https://www.reddit.com/r/neovim/comments/zjeplx/centering_after_cd_with_neoscroll/
@@ -199,34 +212,41 @@ lvim.plugins = {
       require("neoscroll.config").set_mappings(mappings)
     end,
   },
+  -- git blame, commands starts with :GitBlame
   "f-person/git-blame.nvim",
+  -- Git integration via :G command
   "tpope/vim-fugitive",
   "sindrets/diffview.nvim",
   {
+    -- ensures null-ls linters/formatters are installed
     "jayp0521/mason-null-ls.nvim",
     config = function()
       require("mason-null-ls").setup({
-        ensure_installed = { "eslint_d", "prettierd" }
+        ensure_installed = { "eslint_d", "prettierd" },
       })
     end,
   },
   -- refer to link to set up gitlinker https://github.com/ChristianChiarulli/lvim/blob/master/lua/user/git.lua
   -- "ruifm/gitlinker.nvim",
   {
+    -- for cursor jumping, press s/S, press first 2 letters of word we want to jump to, press designated decorator character
     "ggandor/leap.nvim",
     keys = { "s", "S" },
     config = function()
-      require('leap').add_default_mappings()
+      require("leap").add_default_mappings()
     end,
   },
   -- refer to link to set up todo-comments https://github.com/ChristianChiarulli/lvim/blob/master/lua/user/todo-comments.lua
   -- "folke/todo-comments.nvim",
+  -- Basic zen mode, toggle with :ZenMode
   "folke/zen-mode.nvim",
+  -- quickfix/references preview window
   "kevinhwang91/nvim-bqf",
   {
+    -- peek lines with :[line_number], where [line_number] is the actual line number we want to peek
     "nacro90/numb.nvim",
     config = function()
-      require('numb').setup()
+      require("numb").setup()
     end,
   },
 }
