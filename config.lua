@@ -11,9 +11,7 @@ an executable
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save.enabled = true
-lvim.format_on_save = true
 lvim.colorscheme = "vscode"
--- lvim.colorscheme = "lunar"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
@@ -23,8 +21,9 @@ lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
-lvim.keys.normal_mode["<C-d>"] = "<C-d>zz"
-lvim.keys.normal_mode["<C-u>"] = "<C-u>zz"
+-- scrolling up/down with centering is done by neoscroll
+-- lvim.keys.normal_mode["<C-d>"] = "<C-d>zz"
+-- lvim.keys.normal_mode["<C-u>"] = "<C-u>zz"
 -- lvim.keys.normal_mode["<leader>gd"] = ":DiffviewOpen"
 
 -- unmap a default keymapping
@@ -141,7 +140,8 @@ end
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   {
-    command = "eslint_d",
+    command = "prettierd",
+    -- command = "eslint_d",
     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
   },
 }
@@ -168,8 +168,48 @@ code_actions.setup {
 lvim.plugins = {
   "lunarvim/colorschemes",
   "Mofiqul/vscode.nvim",
+  {
+    "karb94/neoscroll.nvim",
+    config = function()
+      -- Hack source for centering after scroll with neoscroll: https://www.reddit.com/r/neovim/comments/zjeplx/centering_after_cd_with_neoscroll/
+      local neoscroll = require("neoscroll")
+
+      local easing = "sine"
+      local jump_time_ms = 100
+
+      local centering_function = function()
+        vim.cmd("normal! zz")
+      end
+
+      neoscroll.setup({
+        post_hook = function(info)
+          if info ~= "center" then
+            return
+          end
+
+          centering_function()
+        end,
+      })
+
+      local mappings = {}
+
+      mappings["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", jump_time_ms, easing, "'center'" } }
+      mappings["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", jump_time_ms, easing, "'center'" } }
+
+      require("neoscroll.config").set_mappings(mappings)
+    end,
+  },
   "f-person/git-blame.nvim",
+  "tpope/vim-fugitive",
   "sindrets/diffview.nvim",
+  {
+    "jayp0521/mason-null-ls.nvim",
+    config = function()
+      require("mason-null-ls").setup({
+        ensure_installed = { "eslint_d", "prettierd" }
+      })
+    end,
+  },
   -- refer to link to set up gitlinker https://github.com/ChristianChiarulli/lvim/blob/master/lua/user/git.lua
   -- "ruifm/gitlinker.nvim",
   {
