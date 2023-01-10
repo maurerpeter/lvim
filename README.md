@@ -13,7 +13,7 @@ mv ~/.config/lvim ~/.config/lvim.bak
 #### Clone the repository
 
 ```
-git clone https://github.com/maurerpeter/lvim.git ~/.config/
+cd ~/.config ; git clone https://github.com/maurerpeter/lvim.git
 ```
 
 #### Run PackerSync
