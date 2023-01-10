@@ -164,6 +164,10 @@ linters.setup({
     command = "eslint_d",
     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
   },
+  {
+    command = "cspell",
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  },
 })
 
 -- set code actions
@@ -222,7 +226,7 @@ lvim.plugins = {
     "jayp0521/mason-null-ls.nvim",
     config = function()
       require("mason-null-ls").setup({
-        ensure_installed = { "eslint_d" },
+        ensure_installed = { "eslint_d", "cspell" },
       })
     end,
   },
