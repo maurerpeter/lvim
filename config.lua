@@ -25,6 +25,7 @@ lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 -- scrolling up/down with centering is done by neoscroll
 -- lvim.keys.normal_mode["<C-d>"] = "<C-d>zz"
 -- lvim.keys.normal_mode["<C-u>"] = "<C-u>zz"
+-- center cursor when jumping through search results
 lvim.keys.normal_mode["n"] = "nzzzv"
 lvim.keys.normal_mode["N"] = "Nzzzv"
 --
@@ -75,6 +76,9 @@ lvim.keys.visual_mode["K"] = ":move '<-2<CR>gv-gv"
 --   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
 --   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
 -- }
+
+lvim.builtin.which_key.mappings["n"] = { ":tabnew<CR>", "Open new tab" }
+lvim.builtin.which_key.mappings["R"] = { ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>", "Replace all" }
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -151,8 +155,11 @@ end
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
   {
+    command = "eslint_d",
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  },
+  {
     command = "prettierd",
-    -- command = "eslint_d",
     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
   },
 })
@@ -270,4 +277,5 @@ lvim.plugins = {
 -- })
 
 vim.opt.relativenumber = true
+vim.opt.scrolloff = 8
 vim.g.gitblame_enabled = 0
