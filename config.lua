@@ -81,6 +81,7 @@ lvim.builtin.which_key.setup.plugins.presets.windows = true
 lvim.builtin.which_key.setup.plugins.presets.z = true
 lvim.builtin.which_key.mappings["n"] = { ":tabnew<CR>", "Open new tab" }
 lvim.builtin.which_key.mappings["R"] = { ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>", "Replace all" }
+lvim.builtin.which_key.mappings["u"] = { ":UndotreeToggle<CR>", "Undotree" }
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -262,6 +263,7 @@ lvim.plugins = {
       require("numb").setup()
     end,
   },
+  "mbbill/undotree",
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
@@ -279,5 +281,7 @@ lvim.plugins = {
 -- })
 
 vim.opt.relativenumber = true
+-- vim.opt.hlsearch = false
 vim.opt.scrolloff = 8
+vim.opt.timeoutlen = 100
 vim.g.gitblame_enabled = 0
