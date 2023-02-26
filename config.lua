@@ -283,6 +283,13 @@ lvim.plugins = {
       require('ufo').setup()
     end,
   },
+  {
+    "gelguy/wilder.nvim",
+    config = function()
+      local wilder = require("wilder")
+      wilder.setup({modes = {":", "/", "?"}})
+    end
+  },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
