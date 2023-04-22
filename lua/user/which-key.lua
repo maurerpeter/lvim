@@ -5,6 +5,7 @@ wk.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 wk.mappings["n"] = { ":tabnew<CR>", "Open new tab" }
 wk.mappings["R"] = { ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>", "Replace all" }
 wk.mappings["u"] = { ":UndotreeToggle<CR>", "Undotree" }
+wk.mappings['x'] = { ":xa<cr>", "Save All and Quit" }
 
 wk.mappings["S"] = {
   name = " persistence.nvim",

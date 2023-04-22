@@ -11,8 +11,11 @@ lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 -- center cursor when jumping through search results
 lvim.keys.normal_mode["n"] = "nzzzv"
 lvim.keys.normal_mode["N"] = "Nzzzv"
-vim.keymap.set('n', 'zr', require('ufo').openallfolds)
-vim.keymap.set('n', 'zm', require('ufo').closeallfolds)
+-- TODO: fix require('ufo') being nil
+lvim.keys.normal_mode["zr"] = ":lua require('ufo').openallfolds()<cr>"
+lvim.keys.normal_mode["zm"] = ":lua require('ufo').closeallfolds()<cr>"
+-- vim.keymap.set('n', 'zr', require('ufo').openallfolds)
+-- vim.keymap.set('n', 'zm', require('ufo').closeallfolds)
 
 
 -- INSERT MODE
@@ -25,24 +28,22 @@ lvim.keys.visual_mode["p"] = '"_dP'
 lvim.keys.visual_mode["J"] = ":move '>+1<CR>gv-gv"
 lvim.keys.visual_mode["K"] = ":move '<-2<CR>gv-gv"
 
--- TODO: check why the override doesn't work
--- lvim.lsp.buffer_mappings.normal_mode["gr"] = {
---   ":lua require'telescope.builtin'.lsp_references()<cr>",
---   " Find references"
--- }
+lvim.lsp.buffer_mappings.normal_mode["gr"] = {
+  ":lua require'telescope.builtin'.lsp_references()<cr>",
+  "Find references"
+}
 
--- lvim.lsp.buffer_mappings.normal_mode["gd"] = {
---   ":lua vim.lsp.buf.definition()<cr>",
---   -- ":lua require'telescope.builtin'.lsp_definitions()<cr>",
---   kind.cmp_kind.Reference .. " Definitions"
--- }
+lvim.lsp.buffer_mappings.normal_mode["gd"] = {
+  ":lua require'telescope.builtin'.lsp_definitions()<cr>",
+  "Definitions"
+}
 
--- lvim.lsp.buffer_mappings.normal_mode["gD"] = {
---   ":lua vim.lsp.buf.type_definition()<cr>",
---   kind.cmp_kind.Reference .. " Type Definition"
--- }
+lvim.lsp.buffer_mappings.normal_mode["gD"] = {
+  ":lua vim.lsp.buf.type_definition()<cr>",
+  "Type Definition"
+}
 
 -- lvim.lsp.buffer_mappings.normal_mode["gf"] = {
 --   ":Telescope frecency<cr>",
---   kind.cmp_kind.Reference .. " Telescope Frecency"
+--   "Telescope Frecency"
 -- }
