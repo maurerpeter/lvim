@@ -38,5 +38,7 @@ wk.mappings["t"] = {
   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
 }
 
+wk.mappings["o"] = { "<cmd>SymbolsOutline<CR>", "Symbols Outline" }
+
 wk.setup.plugins.presets.windows = true
 wk.setup.plugins.presets.z = true

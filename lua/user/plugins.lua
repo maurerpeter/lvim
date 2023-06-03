@@ -166,4 +166,10 @@ lvim.plugins = {
     end
   },
   "/github/copilot.vim",
+  {
+    "simrat39/symbols-outline.nvim",
+    config = function()
+      require('symbols-outline').setup()
+    end
+  },
 }
