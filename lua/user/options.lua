@@ -26,6 +26,10 @@ lvim.builtin.nvimtree.setup.filters.custom = {}
 
 lvim.builtin.treesitter.ignore_install = {}
 lvim.builtin.treesitter.highlight.enable = true
+lvim.builtin.treesitter.rainbow.enable = true
+
+lvim.builtin.cmp.mapping['<Tab>'] = nil
+lvim.builtin.cmp.mapping['<S-Tab>'] = nil
 
 lvim.builtin.project.detection_methods = { "lsp", "pattern" }
 lvim.builtin.project.patterns = {
@@ -40,7 +44,7 @@ vim.o.linebreak = true
 vim.o.wrap = false
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 vim.o.foldcolumn = '1' -- '0' is not bad
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 

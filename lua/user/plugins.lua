@@ -124,43 +124,46 @@ lvim.plugins = {
     },
   },
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    module = "persistence",
     config = function()
-      require("copilot").setup({
-        suggestions = { enabled = false },
-        panel = { enabled = false },
-      })
+      require("persistence").setup {
+        dir = vim.fn.expand(vim.fn.stdpath "config" .. "/session/"),
+        options = { "buffers", "curdir", "tabpages", "winsize" },
+      }
     end,
   },
   {
-    "folke/persistence.nvim",
-    event = "BufReadPre",
+    "windwp/nvim-ts-autotag",
     config = function()
-      require("persistence").setup({
-        dir = vim.fn.expand(vim.fn.stdpath "state" .. "/sessions/"),
-        options = { "buffers", "curdir", "tabpages", "winsize" }
-      })
+      require("nvim-ts-autotag").setup()
+    end,
+  },
+  {
+    "mrjones2014/nvim-ts-rainbow",
+  },
+  {
+    "romgrk/nvim-treesitter-context",
+    config = function()
+      require("treesitter-context").setup {
+        enable = true,   -- Enable this plugin (Can be enabled/disabled later via commands)
+        throttle = true, -- Throttles plugin updates (may improve performance)
+        max_lines = 0,   -- How many lines the window should span. Values <= 0 mean no limit.
+        patterns = {
+          -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+          -- For all filetypes
+          -- Note that setting an entry here replaces all other patterns for this entry.
+          -- By setting the 'default' entry below, you can control which nodes you want to
+          -- appear in the context window.
+          default = {
+            'class',
+            'function',
+            'method',
+          },
+        },
+      }
     end
   },
-  -- "/github/copilot.vim",
-  -- {
-  --   'ray-x/lsp_signature.nvim',
-  --   config = function ()
-  --     local lsp_signature = require('lsp_signature')
-  --     lsp_signature.setup({
-  --       toggle_key = '<M-x>',
-  --     })
-  --   end
-  -- },
+  "/github/copilot.vim",
 }
-table.insert(lvim.plugins, {
-  "zbirenbaum/copilot-cmp",
-  event = "InsertEnter",
-  dependencies = { "zbirenbaum/copilot.lua" },
-  config = function()
-    local ok, cmp = pcall(require, "copilot_cmp")
-    if ok then cmp.setup({}) end
-  end,
-})
