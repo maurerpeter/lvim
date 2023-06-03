@@ -172,4 +172,5 @@ lvim.plugins = {
       require('symbols-outline').setup()
     end
   },
+  "theprimeagen/harpoon",
 }
