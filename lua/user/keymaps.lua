@@ -6,8 +6,8 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 -- scrolling up/down with centering is done by neoscroll
--- lvim.keys.normal_mode["<C-d>"] = "<C-d>zz"
--- lvim.keys.normal_mode["<C-u>"] = "<C-u>zz"
+lvim.keys.normal_mode["<C-d>"] = "<C-d>zz"
+lvim.keys.normal_mode["<C-u>"] = "<C-u>zz"
 -- center cursor when jumping through search results
 lvim.keys.normal_mode["n"] = "nzzzv"
 lvim.keys.normal_mode["N"] = "Nzzzv"

@@ -2,38 +2,6 @@ lvim.plugins = {
   "lunarvim/colorschemes",
   -- vscode theme
   "Mofiqul/vscode.nvim",
-  {
-    -- smooth scrolling for code jumps
-    "karb94/neoscroll.nvim",
-    config = function()
-      -- Hack source for centering after scroll with neoscroll: https://www.reddit.com/r/neovim/comments/zjeplx/centering_after_cd_with_neoscroll/
-      local neoscroll = require("neoscroll")
-
-      local easing = "sine"
-      local jump_time_ms = 100
-
-      local centering_function = function()
-        vim.cmd("normal! zz")
-      end
-
-      neoscroll.setup({
-        post_hook = function(info)
-          if info ~= "center" then
-            return
-          end
-
-          centering_function()
-        end,
-      })
-
-      local mappings = {}
-
-      mappings["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", jump_time_ms, easing, "'center'" } }
-      mappings["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", jump_time_ms, easing, "'center'" } }
-
-      require("neoscroll.config").set_mappings(mappings)
-    end,
-  },
   -- git blame, commands starts with :GitBlame
   "f-person/git-blame.nvim",
   -- Git integration via :G command
@@ -83,7 +51,7 @@ lvim.plugins = {
   "folke/trouble.nvim",
   {
     "kevinhwang91/nvim-ufo",
-    requires = "kevinhwang91/promise-async",
+    dependencies = "kevinhwang91/promise-async",
     config = function()
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities.textDocument.foldingRange = {
@@ -117,7 +85,7 @@ lvim.plugins = {
         { range = true }
       )
     end,
-    requires = {
+    dependencies = {
       "nvim-telescope/telescope.nvim",
       -- to show diff splits and open commits in browser
       "tpope/vim-fugitive",
@@ -126,7 +94,6 @@ lvim.plugins = {
   {
     "folke/persistence.nvim",
     event = "BufReadPre", -- this will only start session saving when an actual file was opened
-    module = "persistence",
     config = function()
       require("persistence").setup {
         dir = vim.fn.expand(vim.fn.stdpath "config" .. "/session/"),
